@@ -1,6 +1,6 @@
 class ApplicationController < Sinatra::Base
     set :default_content_type, 'application/json'
-    
+    class EventsController < ApplicationController
     #get all events
     get "/events" do
      events = Event.all
@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
       event.to_json
     end
 
-    #delete and event 
+    #delete an event 
     delete "/events/:id" do
       event = Event.find(params[:id])
       if event.destroy
@@ -43,10 +43,6 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-    #signing up for an event
-    post "/signup" do
-      user = User.create(email: params[:email], password_digest: params[:password_digest])
-      user.to_json
-    end
-  end
+    
+  
   
