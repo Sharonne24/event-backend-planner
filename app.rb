@@ -81,34 +81,21 @@ delete '/events/:id' do
   redirect '/'
 end
 
-# app.rb
 
-get '/' do
-  erb :index
-end
-
-
-# RSVP to an event (API endpoint)
-post '/api/events/:event_id/rsvp' do
-  event = Event.find(params[:event_id])
-  guest = Guest.find_or_initialize_by(user_id: session[:user_id], event_id: event.id)
-  guest.rsvp_status = true
-  if guest.save
-    status 200
-    { message: 'RSVP successful' }.to_json
+# update an event
+put '/events/:id' do
+  content_type :json
+  event = Event.find(params[:id])
+  if event
+    request_body = JSON.parse(request.body.read)
+    if event.update(request_body)
+      { message: 'Event updated successfully' }.to_json
+    else
+      { error: 'Failed to update event' }.to_json
+    end
   else
-    status 400
-    { errors: guest.errors.full_messages }.to_json
+    status 404
+    { error: 'Event not found' }.to_json
   end
 end
 
-# Invite a guest to an event (API endpoint)
-post '/api/events/:event_id/invite' do
-  event = Event.find(params[:event_id])
-  guest_email = params[:email]
-
-  # Send invitation email to the guest (you'll need to implement this)
-
-  status 200
-  { message: 'Invitation sent successfully' }.to_json
-end
