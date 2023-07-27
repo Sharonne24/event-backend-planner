@@ -45,6 +45,7 @@ The backend also manages RSVPs by allowing users to submit their names and email
 # Frontend
 The front end of the Event Planner website is developed using React.js. It provides a user-friendly interface for users to interact with the website.
 The front end communicates with the backend API to fetch event data, create new events, update event details, and manage RSVPs.
+This is the link to the frontend:  https://github.com/Sharonne24/event-frontend-planner.git
 
 # Technologies Used
 - Ruby
